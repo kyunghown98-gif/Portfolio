@@ -15,11 +15,10 @@ const ScrambleText = ({
   const frameCountRef = useRef(0);
 
   useEffect(() => {
-    // start가 false가 되면 텍스트를 초기화하고 애니메이션을 멈춥니다.
     if (!start) {
-  cancelAnimationFrame(frameRef.current);
-  return;
-}
+      cancelAnimationFrame(frameRef.current);
+      return;
+    }
 
     let timeout;
     
@@ -27,11 +26,11 @@ const ScrambleText = ({
       const length = text.length;
       const promise = new Promise((resolve) => {
         queueRef.current = [];
-        const totalFrames = duration * 60; // 60fps 기준
+        const totalFrames = duration * 60;
         
         for (let i = 0; i < length; i++) {
-           const from = ''; // 항상 빈 칸에서 시작하도록 변경
-  const to = text[i] || '';
+          const from = '';
+          const to = text[i] || '';
           const startFrame = Math.floor(Math.random() * (totalFrames * 0.2));
           const endFrame = startFrame + Math.floor(Math.random() * (totalFrames * 0.8));
           queueRef.current.push({ from, to, start: startFrame, end: endFrame });
@@ -41,6 +40,14 @@ const ScrambleText = ({
         frameCountRef.current = 0;
         
         const update = () => {
+          frameCountRef.current++;
+
+          // ★ 2프레임에 1번만 실제 렌더링 (DOM 파싱 부하 절반 감소)
+          if (frameCountRef.current % 2 !== 0) {
+            frameRef.current = requestAnimationFrame(update);
+            return;
+          }
+
           let output = '';
           let complete = 0;
           
@@ -55,7 +62,6 @@ const ScrambleText = ({
                 char = chars[Math.floor(Math.random() * chars.length)];
                 queueRef.current[i].char = char;
               }
-              // 네온 효과가 들어간 스크램블 문자
               output += `<span class="opacity-70 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]">${char}</span>`;
             } else {
               output += from;
@@ -68,7 +74,6 @@ const ScrambleText = ({
             resolve();
           } else {
             frameRef.current = requestAnimationFrame(update);
-            frameCountRef.current++;
           }
         };
         

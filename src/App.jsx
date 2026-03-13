@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-import Intro from './component/intro'
+import Intro from './component/Intro'
 import Hero from './component/Hero'
 import Profile from './component/Profile'
 import Index from './component/Index'
 import Closing from './component/Closing'
+import Project from './component/Project'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Hero />
         <Profile/>
         <Index/>
+        <Project/>
         <Closing/>
       </div>
     </>

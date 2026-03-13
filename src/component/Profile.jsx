@@ -75,12 +75,12 @@ const Profile = () => {
         <div className="profile-sidebar">
           {/* Photo Box */}
           <div className="photo-box">
-             {/* 이미지 경로가 올바른지 확인하세요 (public/img/사진.png 기준) */}
-            <img src="/img/사진.png" alt="사진" /> 
-  
+            <img src="./img/사진3.png" alt="사진" /> 
+            <span></span>
           </div>
 
           {/* Info Rows */}
+          
           {infoData.map(([key, value]) => (
             <div key={key} className="info-row">
               <span className="info-label">{key}</span>
@@ -126,9 +126,8 @@ const Profile = () => {
           {/* Education */}
           <div className="education-section">
             <span className="section-sublabel">&gt;&gt; EDUCATION &amp; CERT</span>
-            {educationData.map(([year, name]) => (
-              <div key={year} className="education-row">
-                <span className="education-arrow">▶</span>
+            {educationData.map(([year, name], index) => (
+              <div key={`${year}-${index}`} className="education-row">
                 <span className="education-year">{year}</span>
                 <span className="education-name">{name}</span>
               </div>

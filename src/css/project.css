@@ -1,0 +1,371 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* ── PROJECT SECTION ────────────────────────────── */
+.prj-section {
+  max-width: 1440px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 4rem);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(2.5rem);
+  transition: all 0.8s ease;
+}
+
+.prj-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── TERMINAL CONTAINER ─────────────────────────── */
+.prj-terminal {
+  position: relative;
+  border: 1px solid rgba(0, 255, 60, 0.25);
+  background: rgba(0, 10, 0, 0.85);
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.15),
+              inset 0 0 30px rgba(0, 255, 65, 0.03);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+/* CRT scanlines on terminal */
+.prj-terminal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 70, 0.012) 2px,
+    rgba(0, 255, 70, 0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── TERMINAL HEADER ────────────────────────────── */
+.prj-term-header {
+  padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1rem, 2vw, 1.25rem);
+  border-bottom: 1px solid rgba(0, 255, 60, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 255, 65, 0.06);
+  position: relative;
+  z-index: 2;
+}
+
+.prj-term-title {
+  font-family: "VT323", monospace;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  color: #00ff46;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 255, 70, 0.5);
+}
+
+.prj-blink {
+  font-family: "VT323", monospace;
+  font-size: clamp(0.75rem, 1.1vw, 0.9rem);
+  color: #00ff46;
+  animation: prjBlinker 1.5s linear infinite;
+}
+
+@keyframes prjBlinker {
+  50% { opacity: 0; }
+}
+
+/* ── TERMINAL BODY ──────────────────────────────── */
+.prj-term-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── FILE LIST (LEFT) ───────────────────────────── */
+.prj-file-list {
+  width: 35%;
+  border-right: 1px solid rgba(0, 255, 60, 0.15);
+  padding: clamp(1rem, 2vw, 1.5rem);
+  overflow-y: auto;
+}
+
+.prj-file-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.prj-file-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 143, 17, 0.6);
+}
+
+.prj-dir-title {
+  font-family: "VT323", monospace;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: #fff;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+.prj-file-item {
+  font-family: "VT323", monospace;
+  padding: clamp(0.7rem, 1.2vw, 1rem);
+  margin-bottom: clamp(0.5rem, 1vw, 0.7rem);
+  border: 1px dashed rgba(0, 143, 17, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  color: #00ff46;
+}
+
+.prj-file-item:hover {
+  background: rgba(0, 255, 65, 0.12);
+  border-style: solid;
+}
+
+.prj-file-item.active {
+  background: #00ff46;
+  color: #050505;
+  border-color: #00ff46;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+/* ── VIEWER (RIGHT) ─────────────────────────────── */
+.prj-viewer {
+  width: 65%;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  position: relative;
+  overflow-y: auto;
+}
+
+.prj-viewer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.prj-viewer::-webkit-scrollbar-thumb {
+  background: rgba(0, 143, 17, 0.6);
+}
+
+/* ── LOADING ────────────────────────────────────── */
+.prj-loading {
+  font-family: "VT323", monospace;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  color: #00ff46;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-shadow: 0 0 8px rgba(0, 255, 70, 0.5);
+}
+
+/* ── VIEWER CONTENT ─────────────────────────────── */
+.prj-viewer-content {
+  font-family: "VT323", monospace;
+  line-height: 1.6;
+  color: #00ff46;
+}
+
+/* ── GLITCH PROJECT TITLE ───────────────────────── */
+.prj-glitch {
+  font-family: "VT323", monospace;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: #fff;
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem) 0;
+  display: inline-block;
+  text-shadow: 2px 0 #ff003c, -2px 0 #00ffff;
+}
+
+@keyframes prjGlitch {
+  0%   { transform: translate(0); }
+  20%  { transform: translate(-2px, 2px); }
+  40%  { transform: translate(-2px, -2px); }
+  60%  { transform: translate(2px, 2px); }
+  80%  { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* ── PROJECT IMAGE ──────────────────────────────── */
+.prj-img-container {
+  width: 100%;
+  height: clamp(8rem, 18vw, 13rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid rgba(0, 143, 17, 0.4);
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 20, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.8s ease;
+}
+
+.prj-img-container.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.prj-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%) sepia(100%) hue-rotate(75deg) brightness(0.9) contrast(1.5);
+  opacity: 0.8;
+  transition: all 0.5s ease;
+}
+
+.prj-img-container:hover .prj-img {
+  opacity: 1;
+  filter: grayscale(100%) sepia(100%) hue-rotate(75deg) brightness(1.2) contrast(1.5);
+  transform: scale(1.05);
+}
+
+/* 이미지 위 스캔라인 */
+.prj-img-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* ── META DATA ──────────────────────────────────── */
+.prj-meta {
+  font-family: "VT323", monospace;
+  border-left: 3px solid #00ff46;
+  padding-left: clamp(0.75rem, 1.5vw, 1rem);
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: #a0f0a0;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  line-height: 1.8;
+}
+
+/* ── DESCRIPTION (typed) ────────────────────────── */
+.prj-desc {
+  font-family: "VT323", monospace;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.7;
+  color: #00ff46;
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem) 0;
+  min-height: 3em;
+}
+
+/* ── CURSOR ─────────────────────────────────────── */
+.prj-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.85em;
+  background: #00ff46;
+  box-shadow:
+    0 0 8px rgba(0, 255, 70, 0.9),
+    0 0 20px rgba(0, 255, 70, 0.5);
+  animation: prjCursorBlink 1s step-end infinite;
+  vertical-align: middle;
+  margin-left: 3px;
+}
+
+@keyframes prjCursorBlink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+/* ── EXTRAS (TAGS + BUTTON) ─────────────────────── */
+.prj-extras {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.prj-extras.show {
+  opacity: 1;
+}
+
+.prj-tech-tags {
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.prj-tech-label {
+  font-family: "VT323", monospace;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  color: #00ff46;
+  display: block;
+  margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+.prj-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.4rem, 0.8vw, 0.6rem);
+}
+
+.prj-tag {
+  font-family: "VT323", monospace;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  background: rgba(0, 255, 65, 0.08);
+  border: 1px solid rgba(0, 255, 65, 0.4);
+  padding: clamp(0.25rem, 0.5vw, 0.35rem) clamp(0.5rem, 1vw, 0.7rem);
+  color: #00ff46;
+  transition: all 0.3s ease;
+}
+
+.prj-tag:hover {
+  background: rgba(0, 255, 65, 0.2);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+
+/* ── LAUNCH BUTTON ──────────────────────────────── */
+.prj-launch-btn {
+  font-family: "VT323", monospace;
+  display: inline-block;
+  padding: clamp(0.5rem, 1vw, 0.7rem) clamp(1.2rem, 2.5vw, 2rem);
+  background: transparent;
+  color: #00ff46;
+  border: 2px solid #00ff46;
+  text-decoration: none;
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.prj-launch-btn:hover {
+  background: #00ff46;
+  color: #050505;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+}
+
+/* ── RESPONSIVE ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .prj-term-body {
+    flex-direction: column;
+  }
+
+  .prj-file-list {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 255, 60, 0.15);
+    max-height: 12rem;
+  }
+
+  .prj-viewer {
+    width: 100%;
+    min-height: 20rem;
+  }
+
+  .prj-term-header {
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: flex-start;
+  }
+}
